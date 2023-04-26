@@ -1,0 +1,1778 @@
+{
+	"info": {
+		"_postman_id": "9b7e0c9f-a297-4355-afcc-a3bc9c87ca95",
+		"name": "LMS_Group",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23539063"
+	},
+	"item": [
+		{
+			"name": "Authorization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json();\r",
+							"pm.collectionVariables.set(\"refresh_token\", responseBody.refresh);\r",
+							"pm.collectionVariables.set(\"access_token\", responseBody.access);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"belhard\",\r\n  \"password\": \"belhard\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/auth/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET manager Group, LMS-632",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (valid data), LMS-633",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 17,\r\n\"number\": 213,\r\n\"date_start\": \"2023-04-22\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (only required fields), LMS-634",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"number\": 751,\r\n\"course\": 1\r\n}\r\n\r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//course*\tinteger title: Курс",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (number: min), LMS-635",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": 0,\r\n\"date_start\": \"2023-04-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (number: max), LMS-636",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": 32767,\r\n\"date_start\": \"2023-04-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (number = min -1), LMS-637",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": -1,\r\n\"date_start\": \"2023-04-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (number = max +1), LMS-638",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": 32768,\r\n\"date_start\": \"2023-04-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (number = empty), LMS-639",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\":,\r\n\"date_start\": \"2023-04-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (number = null), LMS-640",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": null,\r\n\"date_start\": \"2023-04-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (number = \"\"), LMS-641",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": \"\",\r\n\"date_start\": \"2023-04-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (number none), LMS-642",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\r\n\"date_start\": \"2023-04-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (number = \" \"), LMS-643",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": \" \",\r\n\"date_start\": \"2023-04-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (number = space), LMS-644",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": 4587,\r\n\"date_start\": \"2022-04-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (data_start = date in the past), LMS-645",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": 4587,\r\n\"date_start\": \"2022-04-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (data_start = invalid data), LMS-647",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": 4587,\r\n\"date_start\": \"2028-40-29\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (data_start = inverted date type), LMS-648",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": 4587,\r\n\"date_start\": \"25-07-2023\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (data_start = US date type), LMS-649",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": 4587,\r\n\"date_start\": \"05-17-2023\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (data_start = empty), LMS-650",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": 4587,\r\n\"date_start\": \"\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (data_start = null), LMS-651",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": 4587,\r\n\"date_start\": null,\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 0\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (data_start = space), LMS-652",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 8,\r\n\"number\": 4587,\r\n\"date_start\": \" \",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group (id=empty), LMS-834",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\":,\r\n\"number\": 4587,\r\n\"date_start\": \" \",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Group TEST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Negative request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": -15,\r\n\"number\": 564,\r\n\"date_start\": \"2023-04-29\",\r\n\"audience\": null,\r\n\"course\": 1,\r\n\"mentor\":-15\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Course TEST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"id\": 24,\r\n        \"name\": \"Java Script Beginer\",\r\n        \"price\": 5654,\r\n        \"category\": 1,\r\n        \"duration\": 3\r\n         }\r\n\r\n\r\n//id\tinteger\r\n//title: ID\r\n//readOnly: true\r\n//name*\tstring\r\n//title: Название курса\r\n//maxLength: 64\r\n//minLength: 1\r\n//price*\tstring($decimal)\r\n//title: Стоимость\r\n//category*\tinteger\r\n//title: Категория\r\n//duration*\tinteger\r\n//title: Продолжительность обучения в днях\r\n//maximum: 32767\r\n//minimum: 0\r\n ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/course/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"course",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST manager Feedback TEST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\nuser: 10,\r\ntext: \"Test-Test\"\r\n\r\n}\r\n\r\n\r\n\r\n//user*\tinteger\r\n//title: Пользователь\r\n//text\tstring\r\n//title: Отзыв\r\n//maxLength: 350\r\n//minLength: 1\r\n//x-nullable: true\r\n\r\n\r\n \r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/feedback/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"feedback",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET manager Course TEST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n\r\n\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/course/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"course",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET manager Feedback TEST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/feedback",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"feedback"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET manager Group TEST",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/10/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						"10",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT manager Group TEST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"number\": 7896,\r\n\"date_start\": \"2023-05-05\",\r\n\"audience\":\tnull,\r\n\"course\": 1,\r\n\"mentor\": 1\r\n}\r\n\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/8/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						"8",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE manager Group TEST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n//id\tinteger title: ID readOnly: true \r\n//number*\tinteger title: Номер группы maximum: 32767 minimum: 0\r\n//date_start\tstring($date) title: Дата начала x-nullable: true\r\n//audience\tinteger title: Аудитория x-nullable: true\r\n//course*\tinteger title: Курс\r\n//mentor\tinteger title: Ментор x-nullable: true\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/group/10/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"group",
+						"10",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE manager Course TEST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 - 204\", function () {\r",
+							"   pm.expect(pm.response.code).to.be.oneOf([201, 202,204]);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/manager/course/4/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"course",
+						"4",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "refresh_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
